@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Service — Bin Luxe Vegas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #C9943A;
+            --gold-light: #F0C96A;
+            --gold-mid: #D4A535;
+            --black: #0D0D0D;
+            --off-black: #141414;
+            --charcoal: #1E1E1E;
+            --muted: #888;
+            --light: #F5F3EE;
+            --error: #FF6B6B;
+            --success: #51CF66;
+            --serif: 'Playfair Display', Georgia, serif;
+            --sans: 'DM Sans', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--black) 0%, var(--off-black) 100%);
+            color: var(--light);
+            font-family: var(--sans);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* HEADER */
+        .header {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: var(--serif);
+            font-size: 42px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: var(--muted);
+        }
+
+        .header a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+        /* FORM CONTAINER */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--charcoal);
+            border: 1px solid rgba(201, 148, 58, 0.2);
+            border-radius: 16px;
+            padding: 60px 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* FORM SECTION */
+        .form-section {
+            margin-bottom: 50px;
+        }
+
+        .form-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gold-light);
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(201, 148, 58, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* FORM GROUP */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gold-light);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--error);
+        }
+
+        /* INPUT FIELDS */
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            font-family: var(--sans);
+            font-size: 15px;
+            background: var(--off-black);
+            border: 1px solid rgba(201, 148, 58, 0.3);
+            border-radius: 8px;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: var(--muted);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 148, 58, 0.15);
+        }
+
+        input.error, select.error, textarea.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.15);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23C9943A' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* CHECKBOX AND RADIO */
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: var(--off-black);
+            border: 1px solid rgba(201, 148, 58, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover, .radio-item:hover {
+            border-color: var(--gold);
+            background: rgba(201, 148, 58, 0.05);
+        }
+
+        .checkbox-item input[type="checkbox"],
+        .radio-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin: 0;
+            accent-color: var(--gold);
+        }
+
+        .checkbox-item label, .radio-item label {
+            margin: 0;
+            color: var(--light);
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 400;
+            text-transform: none;
+            flex: 1;
+        }
+
+        /* BUTTON */
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-mid) 100%);
+            color: var(--black);
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(201, 148, 58, 0.3);
+            margin-top: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(201, 148, 58, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* ERROR MESSAGE */
+        .error-message {
+            display: none;
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 3px solid var(--error);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            color: var(--error);
+            font-size: 14px;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* SUCCESS MESSAGE */
+        .success-message {
+            display: none;
+            background: rgba(81, 207, 102, 0.1);
+            border-left: 3px solid var(--success);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            color: var(--success);
+            font-size: 14px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* LOADING SPINNER */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(201, 148, 58, 0.3);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-submit.loading .spinner {
+            display: inline-block;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .form-container {
+                padding: 40px 24px;
+                border-radius: 12px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Book Your Service</h1>
+        <p><a href="index.html">← Back to Home</a></p>
+    </div>
+
+    <!-- FORM CONTAINER -->
+    <div class="form-container">
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+
+        <form id="bookingForm" method="POST" action="https://formspree.io/f/xqewnlld">
+            <!-- PERSONAL INFORMATION SECTION -->
+            <div class="form-section">
+                <h2 class="section-title">👤 Personal Information</h2>
+
+                <div class="form-group">
+                    <label for="fullName" class="required">Full Name</label>
+                    <input type="text" id="fullName" name="Full Name" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="required">Email Address</label>
+                    <input type="email" id="email" name="Email" placeholder="john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="required">Phone Number</label>
+                    <input type="tel" id="phone" name="Phone" placeholder="(702) 555-0000" required>
+                </div>
+            </div>
+
+            <!-- SERVICE DETAILS SECTION -->
+            <div class="form-section">
+                <h2 class="section-title">🧹 Service Details</h2>
+
+                <div class="form-group">
+                    <label for="plan" class="required">Choose Your Plan</label>
+                    <select id="plan" name="Cleaning Plan" required>
+                        <option value="">-- Select a Plan --</option>
+                        <option value="Luxe Essentials — $30/month">Luxe Essentials — $30/month (Standard Clean)</option>
+                        <option value="Luxe Plus — $55/month">Luxe Plus — $55/month (Deep Clean + Sanitization)</option>
+                        <option value="Luxe Platinum — $90/month">Luxe Platinum — $90/month (Premium Deep Clean + Extended Protection)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bins" class="required">Number of Bins</label>
+                    <select id="bins" name="Number of Bins" required>
+                        <option value="">-- Select --</option>
+                        <option value="1 Bin">1 Bin</option>
+                        <option value="2 Bins">2 Bins (Discount Applied)</option>
+                        <option value="3+ Bins">3+ Bins (Best Value)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Add-ons (Optional)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="addon1" name="Add-ons" value="Additional Bin (+$20)">
+                            <label for="addon1">Additional Bin (+$20)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="addon2" name="Add-ons" value="One-Time Deep Clean ($65-$85)">
+                            <label for="addon2">One-Time Deep Clean ($65-$85)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="addon3" name="Add-ons" value="Same-Day Service (+$25)">
+                            <label for="addon3">Same-Day Service (+$25)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="addon4" name="Add-ons" value="Multi-Bin Discount">
+                            <label for="addon4">Multi-Bin Discount</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADDRESS SECTION -->
+            <div class="form-section">
+                <h2 class="section-title">📍 Service Location</h2>
+
+                <div class="form-group">
+                    <label for="address" class="required">Full Address</label>
+                    <input type="text" id="address" name="Service Location" placeholder="123 Main Street, Las Vegas, NV 89101" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="addressDetails">Additional Location Details</label>
+                    <input type="text" id="addressDetails" name="Location Details" placeholder="Gate code, apartment number, building info, etc.">
+                </div>
+            </div>
+
+            <!-- NOTES SECTION -->
+            <div class="form-section">
+                <h2 class="section-title">📝 Additional Notes</h2>
+
+                <div class="form-group">
+                    <label for="notes">Any Special Requests?</label>
+                    <textarea id="notes" name="Special Notes" placeholder="Please let us know if you have any special requirements or instructions..."></textarea>
+                </div>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" class="btn-submit">
+                <span class="spinner"></span>
+                SCHEDULE YOUR SERVICE
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xqewnlld';
+        const CALENDAR_URL = 'https://calendar.app.google/BmAMGVzMdQQjSrM88';
+        const BUSINESS_EMAIL = 'binluxvegas@gmail.com'; // Your Gmail address for confirmations
+        const SESSION_KEY = 'binLuxeBookingData';
+
+        // GET FORM ELEMENTS
+        const form = document.getElementById('bookingForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const submitButton = document.querySelector('.btn-submit');
+
+        // ============================================
+        // FORM SUBMISSION HANDLER
+        // ============================================
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // CLEAR PREVIOUS MESSAGES
+            errorMessage.classList.remove('show');
+            successMessage.classList.remove('show');
+
+            // VALIDATE FORM
+            if (!validateForm()) {
+                return;
+            }
+
+            // DISABLE BUTTON AND SHOW LOADING
+            submitButton.disabled = true;
+            submitButton.classList.add('loading');
+            submitButton.textContent = 'Processing...';
+
+            try {
+                // COLLECT FORM DATA
+                const formData = new FormData(form);
+                
+                // STORE BOOKING DATA IN SESSION FOR LATER USE
+                const bookingData = {
+                    timestamp: new Date().toISOString(),
+                    fullName: formData.get('Full Name'),
+                    email: formData.get('Email'),
+                    phone: formData.get('Phone'),
+                    plan: formData.get('Cleaning Plan'),
+                    bins: formData.get('Number of Bins'),
+                    address: formData.get('Service Location'),
+                    locationDetails: formData.get('Location Details'),
+                    notes: formData.get('Special Notes'),
+                    addOns: formData.getAll('Add-ons')
+                };
+
+                // Store in session storage for calendar page to access
+                sessionStorage.setItem(SESSION_KEY, JSON.stringify(bookingData));
+
+                // SUBMIT TO FORMSPREE
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to submit form');
+                }
+
+                // SHOW SUCCESS MESSAGE
+                successMessage.innerHTML = '✓ Form submitted successfully!<br>Redirecting to calendar scheduling...';
+                successMessage.classList.add('show');
+
+                // REDIRECT TO CALENDAR AFTER SHORT DELAY (NO VERIFICATION STEP)
+                setTimeout(() => {
+                    window.location.href = CALENDAR_URL;
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.textContent = '✗ Error submitting form. Please try again or contact support.';
+                errorMessage.classList.add('show');
+
+                // RE-ENABLE BUTTON
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+                submitButton.textContent = 'SCHEDULE YOUR SERVICE';
+            }
+        });
+
+        // ============================================
+        // VALIDATE FORM
+        // ============================================
+        function validateForm() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const plan = document.getElementById('plan').value;
+            const bins = document.getElementById('bins').value;
+            const address = document.getElementById('address').value.trim();
+
+            let isValid = true;
+
+            // CHECK REQUIRED FIELDS
+            if (!fullName) {
+                showFieldError('fullName', 'Full Name is required');
+                isValid = false;
+            }
+
+            if (!email || !validateEmail(email)) {
+                showFieldError('email', 'Valid email is required');
+                isValid = false;
+            }
+
+            if (!phone) {
+                showFieldError('phone', 'Phone number is required');
+                isValid = false;
+            }
+
+            if (!plan) {
+                showFieldError('plan', 'Please select a plan');
+                isValid = false;
+            }
+
+            if (!bins) {
+                showFieldError('bins', 'Please select number of bins');
+                isValid = false;
+            }
+
+            if (!address) {
+                showFieldError('address', 'Service location is required');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                errorMessage.textContent = '✗ Please fill in all required fields correctly.';
+                errorMessage.classList.add('show');
+            }
+
+            return isValid;
+        }
+
+        // ============================================
+        // SHOW FIELD ERROR
+        // ============================================
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            field.classList.add('error');
+            
+            field.addEventListener('focus', function() {
+                field.classList.remove('error');
+            }, { once: true });
+        }
+
+        // ============================================
+        // VALIDATE EMAIL
+        // ============================================
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // ============================================
+        // CLEAR ERROR ON INPUT
+        // ============================================
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
