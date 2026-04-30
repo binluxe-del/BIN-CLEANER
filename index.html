@@ -1119,6 +1119,13 @@
   text-shadow: 0 0 12px rgba(201,148,58,.55);
 }
 
+
+/* FIX: keep all page sections visible on GitHub/custom domain */
+.fade-up {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -1635,6 +1642,17 @@
 
   <p class="footer-copy">© 2026 Bin Luxe Vegas. All rights reserved.</p>
 </footer>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.fade-up').forEach(function (el) {
+      el.classList.add('visible');
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+  });
+</script>
 
 </body>
 </html>
