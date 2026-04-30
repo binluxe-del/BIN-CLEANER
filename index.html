@@ -1099,6 +1099,26 @@
 .social-icons a{color:#C9943A;font-size:28px;text-decoration:none;transition:transform .25s ease,color .25s ease,text-shadow .25s ease;}
 .social-icons a:hover{color:#F0C96A;transform:scale(1.15);text-shadow:0 0 12px rgba(201,148,58,.55);}
 
+
+.footer-social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  margin: 20px 0 14px;
+}
+.footer-social-icons a {
+  color: var(--gold);
+  font-size: 27px;
+  text-decoration: none;
+  transition: color .25s ease, transform .25s ease, text-shadow .25s ease;
+}
+.footer-social-icons a:hover {
+  color: var(--gold-light);
+  transform: scale(1.14);
+  text-shadow: 0 0 12px rgba(201,148,58,.55);
+}
+
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -1600,181 +1620,20 @@
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <p class="footer-copy">© 2026 Bin Luxe Vegas. All rights reserved.</p>
-</footer>
 
-<script>
-  // Hamburger
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
-  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-
-  // Fade-up on scroll
-  const fadeEls = document.querySelectorAll('.fade-up');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  fadeEls.forEach(el => obs.observe(el));
-
-
-  const diffDetails = [
-    {heading:"Eco-Conscious Cleaning",body:"Our biodegradable, non-toxic solutions are safe for children, pets, and the Las Vegas ecosystem. No harsh chemicals — just pure, powerful cleaning that leaves zero harmful residue behind.",stats:[{val:"100%",lbl:"Non-Toxic Formula"},{val:"0",lbl:"Harmful Residues"}]},
-    {heading:"Crown-Level Luxury",body:"We don't just clean bins — we elevate the experience. Every visit is executed with hotel-grade attention to detail, professional equipment, and a commitment to results that reflect your standards.",stats:[{val:"5★",lbl:"Service Rating"},{val:"Pro",lbl:"Grade Equipment"}]},
-    {heading:"Built for Vegas Heat",body:"Las Vegas heat accelerates bacteria growth by up to 3× compared to cooler climates. Our heat-activated formula is specifically engineered to neutralize pathogens that thrive in extreme temperatures.",stats:[{val:"3×",lbl:"Faster Bacteria Kill"},{val:"115°F",lbl:"Rated Performance"}]},
-    {heading:"Total Odor Elimination",body:"We don't mask odors — we eliminate them at the molecular level using advanced enzyme-based sanitizers that break down odor-causing compounds, leaving your bin genuinely fresh.",stats:[{val:"99.9%",lbl:"Bacteria Eliminated"},{val:"30d",lbl:"Odor Protection"}]}
-  ];
-  function selectDiffCard(id) {
-    document.querySelectorAll('.diff-card').forEach((c,i)=>c.classList.toggle('active',i===id));
-    const d = diffDetails[id];
-    document.getElementById('diffDetailContent').innerHTML =
-      '<div><div class="diff-detail-heading">'+d.heading+'</div><p class="diff-detail-body">'+d.body+'</p></div><div>'+
-      d.stats.map(s=>'<div class="diff-stat-row"><span class="diff-stat-val">'+s.val+'</span><span class="diff-stat-lbl">'+s.lbl+'</span></div>').join('')+'</div>';
-    const panel = document.getElementById('diffDetail');
-    panel.classList.remove('open'); void panel.offsetWidth; panel.classList.add('open');
-  }
-  selectDiffCard(0);
-  function animateDiffCounters() {
-    document.querySelectorAll('.diff-counter-num').forEach(el => {
-      const target = parseInt(el.dataset.target);
-      const suffix = el.dataset.suffix;
-      let start = 0;
-      const step = target / (1600/16);
-      const t = setInterval(()=>{ start=Math.min(start+step,target); el.textContent=Math.round(start)+suffix; if(start>=target)clearInterval(t); },16);
-    });
-  }
-  const diffObs = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ animateDiffCounters(); diffObs.disconnect(); }}); },{threshold:0.3});
-  const diffSection = document.getElementById('difference');
-  if(diffSection) diffObs.observe(diffSection);
-
-
-  // ─── CLICK MAGIC EFFECT ───
-  const goldColors = ['#FFE88A','#D4A535','#C9943A','#F0C96A','#fff8dc','#FFD700'];
-  const sparkleSymbols = ['✦','★','✸','◆','✺','⬡','✷'];
-
-  document.addEventListener('click', function(e) {
-    const x = e.clientX;
-    const y = e.clientY;
-
-    // 1. Ripple ring
-    const ripple = document.createElement('div');
-    ripple.className = 'blv-ripple';
-    ripple.style.cssText = `left:${x}px; top:${y}px;`;
-    document.body.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 700);
-
-    // 2. Gold particles burst
-    const count = 14;
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * 360;
-      const dist = 40 + Math.random() * 55;
-      const rad = angle * Math.PI / 180;
-      const dx = Math.cos(rad) * dist;
-      const dy = Math.sin(rad) * dist;
-      const size = 4 + Math.random() * 6;
-      const color = goldColors[Math.floor(Math.random() * goldColors.length)];
-      const delay = Math.random() * 80;
-
-      const p = document.createElement('div');
-      p.className = 'blv-particle';
-      p.style.cssText = `
-        left:${x}px; top:${y}px;
-        width:${size}px; height:${size}px;
-        background:${color};
-        margin:-${size/2}px;
-        --dx:${dx}px; --dy:${dy}px;
-        animation-delay:${delay}ms;
-      `;
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 800 + delay);
-    }
-
-    // 3. Sparkle symbols
-    for (let i = 0; i < 6; i++) {
-      const angle = Math.random() * 360;
-      const dist = 30 + Math.random() * 60;
-      const rad = angle * Math.PI / 180;
-      const dx = Math.cos(rad) * dist;
-      const dy = Math.sin(rad) * dist;
-      const dr = (Math.random() - 0.5) * 360;
-      const sym = sparkleSymbols[Math.floor(Math.random() * sparkleSymbols.length)];
-      const color = goldColors[Math.floor(Math.random() * goldColors.length)];
-      const delay = Math.random() * 100;
-
-      const s = document.createElement('div');
-      s.className = 'blv-sparkle';
-      s.textContent = sym;
-      s.style.cssText = `
-        left:${x}px; top:${y}px;
-        color:${color};
-        --dx:${dx}px; --dy:${dy}px;
-        --dr:${dr}deg;
-        animation-delay:${delay}ms;
-      `;
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 800 + delay);
-    }
-
-    // 4. Center flash
-    const flash = document.createElement('div');
-    flash.style.cssText = `
-      position:fixed; left:${x}px; top:${y}px;
-      width:12px; height:12px;
-      background:radial-gradient(circle, #FFE88A, #D4A535);
-      border-radius:50%;
-      margin:-6px;
-      pointer-events:none;
-      z-index:99999;
-      animation:blvBurst 0.35s ease-out forwards;
-      --dx:0px; --dy:0px;
-    `;
-    document.body.appendChild(flash);
-    setTimeout(() => flash.remove(), 400);
-  });
-
-  // FAQs accordion
-  document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.faq-q').addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
-  });
-
-  // Form submit
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.textContent = 'Request Sent! We\'ll be in touch soon.';
-    btn.style.background = '#888';
-    btn.disabled = true;
-  }
-</script>
-
-<footer id="footer">
-  <ul class="footer-links">
-    <li><a href="#reviews">Reviews</a></li>
-    <li><a href="#faqs">FAQs</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#addons">Add-Ons</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <p class="footer-copy">© 2026 Bin Luxe Vegas. All rights reserved.</p>
-</footer>
-
-<footer style="margin-top:80px;padding:40px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.05);">
-  <div style="display:flex;justify-content:center;gap:30px;">
-    <a href="https://www.instagram.com/binluxetrash/" target="_blank" style="color:#C9943A;font-size:26px;">
+  <div class="footer-social-icons">
+    <a href="https://www.instagram.com/binluxetrash/" target="_blank" aria-label="Instagram">
       <i class="fab fa-instagram"></i>
     </a>
-    <a href="https://www.facebook.com/profile.php?id=61589071288547" target="_blank" style="color:#C9943A;font-size:26px;">
+    <a href="https://www.facebook.com/profile.php?id=61589071288547" target="_blank" aria-label="Facebook">
       <i class="fab fa-facebook"></i>
     </a>
-    <a href="https://www.tiktok.com/@bin.luxe.vegas.tr" target="_blank" style="color:#C9943A;font-size:26px;">
+    <a href="https://www.tiktok.com/@bin.luxe.vegas.tr" target="_blank" aria-label="TikTok">
       <i class="fab fa-tiktok"></i>
     </a>
   </div>
+
+  <p class="footer-copy">© 2026 Bin Luxe Vegas. All rights reserved.</p>
 </footer>
 
 </body>
