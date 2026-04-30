@@ -1126,6 +1126,50 @@
   transform: none !important;
 }
 
+
+/* EMERGENCY FIX: make hero and all page content visible */
+#hero {
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  position: relative !important;
+  overflow: visible !important;
+  padding-top: 9rem !important;
+}
+#hero > *:not(.hero-bg),
+.fade-up,
+section,
+.container,
+.hero-title,
+.hero-subtitle,
+.hero-eyebrow,
+.hero-actions,
+.hero-badge {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+#hero > *:not(.hero-bg) {
+  position: relative !important;
+  z-index: 5 !important;
+}
+.hero-bg {
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+.hero-title,
+.hero-subtitle,
+.hero-eyebrow {
+  display: block !important;
+}
+.hero-actions,
+.hero-badge {
+  display: flex !important;
+}
+
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -1652,6 +1696,23 @@
       el.style.transform = 'none';
     });
   });
+</script>
+
+
+<script>
+(function () {
+  function showEverything() {
+    document.querySelectorAll('.fade-up, #hero > *, section, .container').forEach(function (el) {
+      el.classList.add('visible');
+      el.style.opacity = '1';
+      el.style.visibility = 'visible';
+      el.style.transform = 'none';
+    });
+  }
+  showEverything();
+  document.addEventListener('DOMContentLoaded', showEverything);
+  window.addEventListener('load', showEverything);
+})();
 </script>
 
 </body>
