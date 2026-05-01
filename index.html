@@ -1224,9 +1224,9 @@ section,
         <br>
         <p>We provide premium trash bin cleaning designed to eliminate dirt, grime, and odor at the source. Using high-performance, eco-friendly methods, we transform everyday waste bins into clean, sanitized, and odor-free essentials.</p>
         <div class="diff-counters">
-          <div class="diff-counter"><span class="diff-counter-num" data-target="500" data-suffix="+">0+</span><span class="diff-counter-lbl">Bins Cleaned</span></div>
-          <div class="diff-counter"><span class="diff-counter-num" data-target="150" data-suffix="+">0+</span><span class="diff-counter-lbl">Happy Clients</span></div>
-          <div class="diff-counter"><span class="diff-counter-num" data-target="100" data-suffix="%">0%</span><span class="diff-counter-lbl">Eco-Friendly</span></div>
+          <div class="diff-counter"><span class="diff-counter-num" id="counter1" data-target="500" data-suffix="+">0+</span><span class="diff-counter-lbl">Bins Cleaned</span></div>
+          <div class="diff-counter"><span class="diff-counter-num" id="counter2" data-target="150" data-suffix="+">0+</span><span class="diff-counter-lbl">Happy Clients</span></div>
+          <div class="diff-counter"><span class="diff-counter-num" id="counter3" data-target="100" data-suffix="%">0%</span><span class="diff-counter-lbl">Eco-Friendly</span></div>
         </div>
         <a href="booking-form.html" class="btn-primary" style="display:inline-block; margin-top:1.8rem; -webkit-text-fill-color:var(--black);">Get Started</a>
       </div>
@@ -1689,7 +1689,52 @@ section,
 
 
 <script>
+  // ═══════════════════════════════════════════════════════════
+  // ANIMATED COUNTER FUNCTION
+  // ═══════════════════════════════════════════════════════════
+  function animateCounter(element) {
+    const target = parseInt(element.getAttribute('data-target'));
+    const suffix = element.getAttribute('data-suffix') || '';
+    const duration = 2500; // 2.5 seconds
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth acceleration/deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      
+      const current = Math.floor(target * easeOut);
+      element.textContent = current + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  // Trigger counters when they come into view
+  function initCounters() {
+    const counters = document.querySelectorAll('.diff-counter-num');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+          animateCounter(entry.target);
+          entry.target.classList.add('animated');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => observer.observe(counter));
+  }
+
+  // Initialize on page load
   document.addEventListener('DOMContentLoaded', function () {
+    initCounters();
+    
     document.querySelectorAll('.fade-up').forEach(function (el) {
       el.classList.add('visible');
       el.style.opacity = '1';
@@ -1697,7 +1742,6 @@ section,
     });
   });
 </script>
-
 
 <script>
 (function () {
